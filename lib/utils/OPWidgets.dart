@@ -356,3 +356,28 @@ Widget SliderPage({required final Size size, required String image, required Str
     crossAxisAlignment: CrossAxisAlignment.start,
   );
 }
+
+InputDecoration sSInputDecoration({String? name, BuildContext? context, Widget? icon}) {
+  return InputDecoration(
+    disabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(4.0),
+      borderSide: BorderSide(color: Colors.grey.withOpacity(0.4), width: 1),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(4.0),
+      borderSide: BorderSide(color: Colors.grey.withOpacity(0.4), width: 1),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(4.0),
+      borderSide: BorderSide(color: Colors.grey.withOpacity(0.4), width: 1),
+    ),
+    labelText: name,
+    labelStyle: primaryTextStyle(),
+    hintStyle: TextStyle(fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 14, color: Color(0xff000000)),
+    filled: true,
+    fillColor: Color(0xfff2f2f3),
+    isDense: false,
+    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+    suffixIcon: icon,
+  );
+}

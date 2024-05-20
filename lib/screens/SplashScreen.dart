@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:notala_apps/api/AuthApi.dart';
-import 'package:notala_apps/model/ResponseModel.dart';
-import 'package:notala_apps/screens/LoginScreen.dart';
+import 'package:notala_apps/screens/DashboardScreen.dart';
 
 import 'WalkThroughScreen.dart';
 
@@ -25,8 +22,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
   Future<void> init() async {
-    checkAuthentication();
-
     await Future.delayed(Duration(seconds: 2));
     finish(context);
 
@@ -37,21 +32,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     if(firstLook) {
       WalkThroughScreen().launch(context);
     } else {
-      LoginScreen().launch(context);
-    }
-  }
-
-  void checkAuthentication() async {
-    var prefs = await SharedPreferences.getInstance();
-    
-    ResponseModel response = await apiAuthCheck();
-
-    if(response.data != null){
-      prefs.setString("user", jsonEncode(response.data));
-      prefs.setBool("is_auth", true);
-    } else {
-      prefs.setString("bearer_token", '');
-      prefs.setBool("is_auth", false);
+      DashboardScreen().launch(context);
     }
   }
 

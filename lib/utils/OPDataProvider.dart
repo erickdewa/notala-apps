@@ -33,6 +33,16 @@ List<OPPickVerifyModel> getTransactionListItems() {
   return transactionList;
 }
 
+List<OPPickVerifyModel> getCategoryItems() {
+  List<OPPickVerifyModel> transactionList = [];
+  transactionList.add(OPPickVerifyModel(cardTitle: "Hutang", cardSubTitle: "Payment Received", cardNumber: "+ ₹250", cardColor: Colors.red, icon: Icons.call_made));
+  transactionList.add(OPPickVerifyModel(cardTitle: "Piutang", cardSubTitle: "Payment Received", cardNumber: "+ ₹250", cardColor: Colors.red, icon: Icons.call_made));
+  transactionList.add(OPPickVerifyModel(cardTitle: "Makanan", cardSubTitle: "Payment sent", cardNumber: "- ₹50", cardColor: Colors.green, icon: Icons.call_received));
+  transactionList.add(OPPickVerifyModel(cardTitle: "Pendidikan", cardSubTitle: "Payment sent", cardNumber: "- ₹130", cardColor: Colors.green, icon: Icons.call_received));
+
+  return transactionList;
+}
+
 List<OPPickVerifyModel> getSettingItems() {
   List<OPPickVerifyModel> settingList = [];
   settingList.add(OPPickVerifyModel(cardTitle: 'Information', icon: Icons.person));

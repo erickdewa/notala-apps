@@ -199,7 +199,7 @@ class _OPUserDetailsScreenState extends State<OPUserDetailsScreen> {
                       : TextButton(
                           onPressed: () {
                             finish(context);
-                            BottomNavigationScreen().launch(context);
+                            DashboardScreen().launch(context);
                           },
                           child: Text('Finish', style: primaryTextStyle(size: 16, color: opBackgroundColor)),
                         )

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:notala_apps/utils/OPWidgets.dart';
-import 'LoginScreen.dart';
 
 class WalkThroughScreen extends StatefulWidget {
   static String tag = '/WalkThroughScreen';
@@ -182,9 +181,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                             child: SliderButton(
                               color: Color(0xFF343EDB),
                               title: 'Login',
-                              onPressed: () {
-                                LoginScreen().launch(context);
-                              },
+                              onPressed: () { },
                             ),
                           ),
                         ),
