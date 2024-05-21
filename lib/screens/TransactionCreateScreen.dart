@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:notala_apps/screens/DashboardScreen.dart';
 import 'package:notala_apps/utils/OPWidgets.dart';
@@ -17,6 +18,7 @@ class TransactionCreateScreen extends StatefulWidget {
 }
 
 class TransactionCreateScreenState extends State<TransactionCreateScreen> {
+  DateTime selectedDate = DateTime.now();
   int? selectedCategory;
   TextEditingController categoryField = TextEditingController();
   TextEditingController amountField = TextEditingController();
@@ -75,6 +77,7 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
     datas.add({
       'id': datas.length + 1,
       'type': widget.type,
+      'date': dateField.text,
       'title': titleField.text,
       'amount': amountField.text,
       'category_id': selectedCategory,
@@ -143,6 +146,37 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
     );
   }
 
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+      builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+          primaryColor: Colors.black,
+          colorScheme: ColorScheme.light(
+            primary: Colors.black,
+            onPrimary: Colors.white,
+            surface: Colors.tealAccent,
+            onSurface: Colors.black,
+          ),
+          dialogBackgroundColor: Colors.white,
+        ),
+        child: child!,
+      );
+    },
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        dateField.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -191,6 +225,24 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
                     decoration: sSInputDecoration(
                       context: context,
                       name: 'Jumlah',
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () => {
+                      selectDate(context)
+                    },
+                    child: TextField(
+                      enabled: false,
+                      controller: dateField,
+                      obscureText: false,
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
+                      style: TextStyle(fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 14),
+                      decoration: sSInputDecoration(
+                        context: context,
+                        name: 'Tanggal',
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
