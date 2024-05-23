@@ -70,7 +70,7 @@ class TransactionListScreenState extends State<TransactionListScreen> {
                 ),
               ),
             ),
-            Container(
+            (datas.length != 0 ? Container(
               height: context.height() * 85 / 100,
               child: SingleChildScrollView(
                 child: ListView.separated(
@@ -130,8 +130,10 @@ class TransactionListScreenState extends State<TransactionListScreen> {
                       ),
                     ).onTap(() {
                       TransactionDetailsScreen(
+                        index: index,
                         type: data['type'],
                         amount: data['amount'],
+                        date: data['date'],
                         title: data['title'],
                         categoryId: data['categoryId'],
                         description: data['description'],
@@ -140,7 +142,21 @@ class TransactionListScreenState extends State<TransactionListScreen> {
                   },
                 ),
               ),
-            ),
+            ) : Container(
+              width: context.width(),
+              height: context.height() * 80 / 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset("images/notala/empty.png", width: 100),
+                  Text("Tidak ada data transaksi saat ini", style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 15,
+                  )),
+                ],
+              ),
+            )),
           ],
         ),
       ),

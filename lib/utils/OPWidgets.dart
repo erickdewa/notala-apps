@@ -323,7 +323,7 @@ Widget oPDotIndicator({required bool isActive}) {
     height: isActive ? 10.0 : 8.0,
     width: isActive ? 10.0 : 8.0,
     decoration: BoxDecoration(
-      color: isActive ? opPrimaryColor : Colors.grey.withOpacity(0.5),
+      color: isActive ? Colors.black : Colors.grey.withOpacity(0.5),
       borderRadius: BorderRadius.all(Radius.circular(50)),
     ),
   );

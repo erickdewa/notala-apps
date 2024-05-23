@@ -84,7 +84,7 @@ class CategoryListScreenState extends State<CategoryListScreen> {
                 ),
               ),
             ),
-            Container(
+            (categories.length != 0 ? Container(
               height: context.height() * 85 / 100,
               child: SingleChildScrollView(
                 child: ListView.separated(
@@ -147,7 +147,21 @@ class CategoryListScreenState extends State<CategoryListScreen> {
                   },
                 ),
               ),
-            ),
+            ) : Container(
+              width: context.width(),
+              height: context.height() * 80 / 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset("images/notala/empty.png", width: 100),
+                  Text("Tidak ada data transaksi saat ini", style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 15,
+                  )),
+                ],
+              ),
+            )),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:notala_apps/screens/GetToKnowScreen.dart';
 import 'package:notala_apps/utils/OPWidgets.dart';
 
 class WalkThroughScreen extends StatefulWidget {
@@ -49,11 +50,12 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                       children: <Widget>[
                         Container(
                           child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 40, vertical: 50),
                             height: context.height() * 0.5,
                             padding: EdgeInsets.only(top: 16),
                             alignment: Alignment.topRight,
                             child: Image(
-                              image: AssetImage("images/orapay/opslider1.png"),
+                              image: AssetImage("images/notala/catat.png"),
                             ),
                           ),
                           height: size.height * 0.5,
@@ -65,9 +67,9 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Easy Register", textAlign: TextAlign.center, style: boldTextStyle(size: 20)),
+                              Text("Pencatatan Transaksi", textAlign: TextAlign.center, style: boldTextStyle(size: 27)),
                               SizedBox(height: 16.0),
-                              Text("A Discount Toner Carditge is Better than Ever Linuum", textAlign: TextAlign.center, style: secondaryTextStyle(size: 18))
+                              Text("Catat semua transaksi keuangan Anda secara teratur", textAlign: TextAlign.center, style: secondaryTextStyle(size: 18))
                             ],
                           ),
                         ),
@@ -76,9 +78,10 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                     Stack(
                       children: <Widget>[
                         Container(
+                          margin: EdgeInsets.all(30),
                           height: context.height() * 0.5,
                           child: Image(
-                            image: AssetImage("images/orapay/opslider2.png"),
+                            image: AssetImage("images/notala/analisis.png"),
                           ),
                         ),
                         Positioned(
@@ -88,9 +91,9 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Pay Everything", textAlign: TextAlign.center, style: boldTextStyle(size: 20)),
+                              Text("Analisis Keuangan", textAlign: TextAlign.center, style: boldTextStyle(size: 27)),
                               SizedBox(height: 16.0),
-                              Text("A Discount Toner Carditge is Better than Ever Linuum", maxLines: 3, textAlign: TextAlign.center, style: secondaryTextStyle(size: 18))
+                              Text("Telusuri dan analisis pola pengeluaran Anda dengan grafik intuitif", maxLines: 3, textAlign: TextAlign.center, style: secondaryTextStyle(size: 18))
                             ],
                           ),
                         ),
@@ -99,9 +102,10 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                     Stack(
                       children: <Widget>[
                         Container(
+                          margin: EdgeInsets.all(30),
                           height: context.height() * 0.5,
                           child: Image(
-                            image: AssetImage("images/orapay/opslider3.png"),
+                            image: AssetImage("images/notala/mudah.png"),
                           ),
                         ),
                         Positioned(
@@ -111,9 +115,9 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Let\'s Go", textAlign: TextAlign.center, style: boldTextStyle(size: 20)),
+                              Text("Mudah Digunakan", textAlign: TextAlign.center, style: boldTextStyle(size: 27)),
                               SizedBox(height: 16.0),
-                              Text("A Discount Toner Carditge is Better than Ever Linuum", textAlign: TextAlign.center, style: secondaryTextStyle(size: 18))
+                              Text("Mulai perjalanan keuangan Anda dengan Aplikasi kami!", textAlign: TextAlign.center, style: secondaryTextStyle(size: 18))
                             ],
                           ),
                         ),
@@ -141,7 +145,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                               left: 20,
                             ),
                             child: SliderButton(
-                              color: Color(0xFFFF6E18),
+                              color: Colors.black,
                               title: 'Back',
                               onPressed: () {
                                 pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeInCirc);
@@ -164,7 +168,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                               right: 20,
                             ),
                             child: SliderButton(
-                              color: Color(0xFF343EDB),
+                              color: Color(0XFFFD7E14),
                               title: 'Next',
                               onPressed: () {
                                 pageController.nextPage(duration: Duration(milliseconds: 250), curve: Curves.easeInCirc);
@@ -179,9 +183,11 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                               right: 20,
                             ),
                             child: SliderButton(
-                              color: Color(0xFF343EDB),
-                              title: 'Login',
-                              onPressed: () { },
+                              color: Color(0XFFFD7E14),
+                              title: 'Mulai',
+                              onPressed: () {
+                                GetToKnowScreen().launch(context);
+                              },
                             ),
                           ),
                         ),

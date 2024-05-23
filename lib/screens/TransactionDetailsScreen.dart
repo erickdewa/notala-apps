@@ -2,21 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:notala_apps/utils/Colors.dart';
+import 'package:notala_apps/screens/DashboardScreen.dart';
+import 'package:notala_apps/screens/TransactionEditScreen.dart';
 import 'package:notala_apps/utils/Constants.dart';
 import 'package:notala_apps/utils/OPWidgets.dart';
 
 
 class TransactionDetailsScreen extends StatefulWidget {
+  final int index;
   final String type;
   final String amount;
+  final String? date;
   final int? categoryId;
   final String title;
   final String? description;
 
   TransactionDetailsScreen({
+    required this.index,
     required this.type,
     required this.amount,
+    required this.date,
     required this.categoryId,
     required this.title,
     required this.description,
@@ -27,7 +32,11 @@ class TransactionDetailsScreen extends StatefulWidget {
 }
 
 class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
+  int total = 0;
+  int totalDebit = 0;
+  int totalCredit = 0;
   List<dynamic> categories = [];
+  List<dynamic> datas = [];
 
   @override
   void initState() {
@@ -40,7 +49,38 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
 
     setState(() {
       categories = jsonDecode(prefs.getString(Constants.categoryFinance) ?? "[]");
+      datas = jsonDecode(prefs.getString(Constants.dataFinance) ?? "[]");
+      total = prefs.getInt(Constants.totalFinance) ?? 0;
+      totalDebit = prefs.getInt(Constants.totalDebitFinance) ?? 0;
+      totalCredit = prefs.getInt(Constants.totalCreditFinance) ?? 0;
     });
+  }
+
+  void delete() async {
+    var prefs = await SharedPreferences.getInstance();
+
+    dynamic data = datas[widget.index];
+    if(data['type'] == 'debit') {
+      total -= int.parse(data['amount']);
+      totalDebit -= int.parse(data['amount']);
+    } else {
+      total += int.parse(data['amount']);
+      totalCredit -= int.parse(data['amount']);
+    }
+
+    datas.removeAt(widget.index);
+
+    prefs.setInt(Constants.totalFinance, total);
+    prefs.setInt(Constants.totalDebitFinance, totalDebit);
+    prefs.setInt(Constants.totalCreditFinance, totalCredit);
+    prefs.setString(Constants.dataFinance, jsonEncode(datas));
+
+    finish(context);
+    DashboardScreen().launch(context);
+  }
+
+  void edit() {
+    TransactionEditScreen(index: widget.index).launch(context);
   }
 
   @override
@@ -120,8 +160,12 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                             ),
                           ),
                           SizedBox(height: 5),
+                          Text("Tanggal: ${ widget.date }",
+                            style: secondaryTextStyle(size: 15),
+                          ),
+                          SizedBox(height: 5),
                           Text(widget.description ?? '~',
-                            style: secondaryTextStyle(size: 17),
+                            style: secondaryTextStyle(size: 15),
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 5, top: 10, bottom: 20),
@@ -144,16 +188,21 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ButtonBars(
-                        title: 'Print',
-                        icon: Icons.print,
-                        color: opPrimaryColor,
+                        title: 'Edit',
+                        icon: Icons.edit_note_outlined,
+                        color: Colors.amber,
+                        onPressed: () {
+                          TransactionEditScreen(index: widget.index).launch(context);
+                        }
                       ),
                       ButtonBars(
                         size: size,
                         title: 'Hapus',
                         icon: Icons.delete_outline_outlined,
                         color: Colors.red,
-                        onPressed: () {},
+                        onPressed: () {
+                          delete();
+                        },
                       ),
                     ],
                   ),

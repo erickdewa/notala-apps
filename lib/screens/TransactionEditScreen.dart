@@ -8,18 +8,18 @@ import 'package:notala_apps/screens/DashboardScreen.dart';
 import 'package:notala_apps/utils/OPWidgets.dart';
 import 'package:notala_apps/utils/Constants.dart';
 
-class TransactionCreateScreen extends StatefulWidget {
-  final String type;
+class TransactionEditScreen extends StatefulWidget {
+  final int index;
 
-  TransactionCreateScreen({ required this.type });
+  TransactionEditScreen({ required this.index });
 
   @override
-  TransactionCreateScreenState createState() => TransactionCreateScreenState();
+  TransactionEditScreenState createState() => TransactionEditScreenState();
 }
 
-class TransactionCreateScreenState extends State<TransactionCreateScreen> {
+class TransactionEditScreenState extends State<TransactionEditScreen> {
   DateTime selectedDate = DateTime.now();
-  int? selectedCategory = 0;
+  int? selectedCategory;
   TextEditingController categoryField = TextEditingController();
   TextEditingController amountField = TextEditingController();
   TextEditingController titleField = TextEditingController();
@@ -31,6 +31,8 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
   int totalCredit = 0;
   List<dynamic> categories = [];
   List<dynamic> datas = [];
+
+  dynamic data = {};
 
   @override
   void initState() {
@@ -47,6 +49,16 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
       total = prefs.getInt(Constants.totalFinance) ?? 0;
       totalDebit = prefs.getInt(Constants.totalDebitFinance) ?? 0;
       totalCredit = prefs.getInt(Constants.totalCreditFinance) ?? 0;
+
+      data = datas[widget.index];
+
+      selectedCategory = data['category_id'];
+      categoryField.text = categories[(selectedCategory ?? 1) - 1]['name'];
+      dateField.text = data['date'] ?? DateFormat('yyyy-MM-dd').format(DateTime.now());
+      selectedDate = DateFormat('yyyy-MM-dd').parse(dateField.text);
+      amountField.text = data['amount'];
+      titleField.text = data['title'];
+      descriptionField.text = data['description'];
     });
   }
 
@@ -74,31 +86,25 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
       return ;
     }
 
-    if (selectedCategory == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error: Pilih kategory!'),
-        backgroundColor: Colors.deepOrange,
-      ));
-      return ;
-    }
+    if(data['type'] == 'debit') {
+      total -= int.parse(data['amount']);
+      totalDebit -= int.parse(data['amount']);
 
-    datas.add({
-      'id': datas.length + 1,
-      'type': widget.type,
-      'date': dateField.text,
-      'title': titleField.text,
-      'amount': amountField.text,
-      'category_id': selectedCategory,
-      'description': descriptionField.text,
-    });
-
-    if(widget.type == 'debit') {
       total += int.parse(amountField.text);
       totalDebit += int.parse(amountField.text);
     } else {
+      total += int.parse(data['amount']);
+      totalCredit -= int.parse(data['amount']);
+
       total -= int.parse(amountField.text);
       totalCredit += int.parse(amountField.text);
     }
+
+    datas[widget.index]['date'] = dateField.text;
+    datas[widget.index]['title'] = titleField.text;
+    datas[widget.index]['amount'] = amountField.text;
+    datas[widget.index]['category_id'] = selectedCategory;
+    datas[widget.index]['description'] = descriptionField.text;
 
     prefs.setInt(Constants.totalFinance, total);
     prefs.setInt(Constants.totalDebitFinance, totalDebit);
@@ -208,7 +214,7 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
                       icon: Icon(Icons.arrow_back_rounded, size: 30),
                     ),
                     SizedBox(width: 5),
-                    Text("Buat Transaksi ${ widget.type == 'debit' ? 'Pemasukan' : 'Pengeluaran' }", style: TextStyle(
+                    Text("Edit Transaksi ${ data['type'] == 'debit' ? 'Pemasukan' : 'Pengeluaran' }", style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w900,
                     )),
@@ -312,7 +318,7 @@ class TransactionCreateScreenState extends State<TransactionCreateScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Buat",
+                            "Ubah",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,

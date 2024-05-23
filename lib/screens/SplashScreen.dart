@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:notala_apps/screens/DashboardScreen.dart';
+import 'package:notala_apps/screens/GetToKnowScreen.dart';
+import 'package:notala_apps/utils/Constants.dart';
 
 import 'WalkThroughScreen.dart';
 
@@ -26,13 +28,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     finish(context);
 
     var prefs = await SharedPreferences.getInstance();
+    String callname = prefs.getString(Constants.callnameFinance) ?? '';
     bool firstLook = prefs.getBool("first_look") ?? true;
 
     prefs.setBool("first_look", false);
     if(firstLook) {
       WalkThroughScreen().launch(context);
     } else {
-      DashboardScreen().launch(context);
+      if (callname == '') {
+        GetToKnowScreen().launch(context);
+      } else {
+        DashboardScreen().launch(context);
+      }
     }
   }
 
@@ -45,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         children: <Widget>[
           Image.asset('images/orapay/opsplash.png', width: 75, height: 75, fit: BoxFit.fill),
           SizedBox(height: 10),
-          Text("OraPay", style: boldTextStyle(size: 20)),
+          Text("NOTALA", style: boldTextStyle(size: 20)),
         ],
       ).center(),
     );

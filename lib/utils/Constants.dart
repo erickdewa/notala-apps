@@ -8,6 +8,9 @@ class Constants {
   static const String totalDebitFinance = 'NOTALA_TOTAL_DEBIT_FINANCE';
   static const String totalCreditFinance = 'NOTALA_TOTAL_CREDIT_FINANCE';
   static const String categoryFinance = 'NOTALA_CATEGORY';
+  static const String fullnameFinance = 'NOTALA_FULL_NAME';
+  static const String callnameFinance = 'NOTALA_CALL_NAME';
+  static const String genderFinance = 'NOTALA_GENDER';
 }
 
 String formatRupiah(int value) {
