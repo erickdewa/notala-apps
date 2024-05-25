@@ -38,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       if (callname == '') {
         GetToKnowScreen().launch(context);
       } else {
+        finish(context);
         DashboardScreen().launch(context);
       }
     }

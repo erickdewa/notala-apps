@@ -75,6 +75,7 @@ class GetToKnowScreenState extends State<GetToKnowScreen> {
     categories.add({ 'id': 6, 'code': 'fashion', 'name': 'Fashion' });
     prefs.setString(Constants.categoryFinance, jsonEncode(categories));
 
+    finish(context);
     DashboardScreen().launch(context);
   }
 
