@@ -288,7 +288,7 @@ class StatisticScreenState extends State<StatisticScreen> {
               ),
               (datas.length != 0 ?Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                height: context.height() * 35 / 100,
+                height: context.height() * 30 / 100,
                 child: SingleChildScrollView(
                   child: Column(
                     children: weekData.entries.map((entry) {

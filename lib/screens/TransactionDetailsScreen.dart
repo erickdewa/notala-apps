@@ -35,6 +35,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   int total = 0;
   int totalDebit = 0;
   int totalCredit = 0;
+  int indexTrg = 0;
   List<dynamic> categories = [];
   List<dynamic> datas = [];
 
@@ -68,7 +69,16 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       totalCredit -= int.parse(data['amount']);
     }
 
-    datas.removeAt(widget.index);
+    int i = 0;
+      for(dynamic x in datas) {
+        if(x['title'] == widget.title){
+          data = x;
+          indexTrg = i;
+        }
+        i++;
+      }
+
+    datas.removeAt(indexTrg);
 
     prefs.setInt(Constants.totalFinance, total);
     prefs.setInt(Constants.totalDebitFinance, totalDebit);
@@ -80,7 +90,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   }
 
   void edit() {
-    TransactionEditScreen(index: widget.index).launch(context);
+    TransactionEditScreen(index: widget.index, name: widget.title).launch(context);
   }
 
   @override
@@ -192,7 +202,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                         icon: Icons.edit_note_outlined,
                         color: Colors.amber,
                         onPressed: () {
-                          TransactionEditScreen(index: widget.index).launch(context);
+                          TransactionEditScreen(index: widget.index, name: widget.title).launch(context);
                         }
                       ),
                       ButtonBars(

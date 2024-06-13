@@ -56,6 +56,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           Text("NOTALA", style: boldTextStyle(size: 20)),
         ],
       ).center(),
+      bottomNavigationBar: Container(
+        height: 100,
+        child: Column(
+          children: [
+            Text("Support By :", style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600
+            )),
+            SizedBox(height: 10),
+            Image.asset('images/notala/logo-support-by.png', height: 35,)
+          ],
+        ),
+      ),
     );
   }
 }

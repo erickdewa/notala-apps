@@ -10,14 +10,16 @@ import 'package:notala_apps/utils/Constants.dart';
 
 class TransactionEditScreen extends StatefulWidget {
   final int index;
+  final String name;
 
-  TransactionEditScreen({ required this.index });
+  TransactionEditScreen({ required this.index, required this.name });
 
   @override
   TransactionEditScreenState createState() => TransactionEditScreenState();
 }
 
 class TransactionEditScreenState extends State<TransactionEditScreen> {
+  int indexTrg = 0;
   DateTime selectedDate = DateTime.now();
   int? selectedCategory;
   TextEditingController categoryField = TextEditingController();
@@ -50,7 +52,14 @@ class TransactionEditScreenState extends State<TransactionEditScreen> {
       totalDebit = prefs.getInt(Constants.totalDebitFinance) ?? 0;
       totalCredit = prefs.getInt(Constants.totalCreditFinance) ?? 0;
 
-      data = datas[widget.index];
+      int i = 0;
+      for(dynamic x in datas) {
+        if(x['title'] == widget.name){
+          data = x;
+          indexTrg = i;
+        }
+        i++;
+      }
 
       selectedCategory = data['category_id'];
       categoryField.text = categories[(selectedCategory ?? 1) - 1]['name'];
@@ -100,11 +109,11 @@ class TransactionEditScreenState extends State<TransactionEditScreen> {
       totalCredit += int.parse(amountField.text);
     }
 
-    datas[widget.index]['date'] = dateField.text;
-    datas[widget.index]['title'] = titleField.text;
-    datas[widget.index]['amount'] = amountField.text;
-    datas[widget.index]['category_id'] = selectedCategory;
-    datas[widget.index]['description'] = descriptionField.text;
+    datas[indexTrg]['date'] = dateField.text;
+    datas[indexTrg]['title'] = titleField.text;
+    datas[indexTrg]['amount'] = amountField.text;
+    datas[indexTrg]['category_id'] = selectedCategory;
+    datas[indexTrg]['description'] = descriptionField.text;
 
     prefs.setInt(Constants.totalFinance, total);
     prefs.setInt(Constants.totalDebitFinance, totalDebit);

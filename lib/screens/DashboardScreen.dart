@@ -338,7 +338,7 @@ class DashboardScreenState extends State<DashboardScreen> {
               child: Text('Transaksi Terbaru', textAlign: TextAlign.start, style: secondaryTextStyle(size: 18, fontFamily: fontMedium)),
             ),
             (datas.length != 0 ? Container(
-              height: context.height() * 40 / 100,
+              height: context.height() * 35 / 100,
               child: SingleChildScrollView(
                 child: ListView.separated(
                   separatorBuilder: (_, index) => Divider(),
